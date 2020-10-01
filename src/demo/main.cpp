@@ -1,12 +1,13 @@
-#include <engine/Core.h>
-#include <engine/Core.cpp>
+#include <cooleng/Core.h>
 
-#include "iostream"
+#include <iostream>
 
 int main()
 {
-Core core;
-core.dummy();
-std::cout<<"Hello World"<<std::endl;
-return 0;
+	Core core;
+	core.dummy();
+
+	std::cout << "Hello World" << std::endl;
+
+	return 0;
 }
