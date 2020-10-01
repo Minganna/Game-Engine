@@ -11,7 +11,7 @@ src/demo/main.cpp
 
 target_link_libraries(demo engine)
 
-add_library(engine SHARED
-src/engine/Core.cpp
+add_library(engine 
 src/engine/Core.h
+src/engine/Core.cpp
 )
