@@ -1,7 +1,6 @@
 #include <engine/myengine.h>
 
 #include <iostream>
-#include <GL/glew.h>
 
 using namespace myengine;
 

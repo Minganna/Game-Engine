@@ -31,6 +31,8 @@ namespace myengine
 
 		rtn->context = rend::Context::initialize();
 
+		rtn->self = rtn;
+
 		return rtn;
 	}
 
