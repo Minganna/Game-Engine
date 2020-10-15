@@ -1,17 +1,32 @@
 cmake_minimum_required(VERSION 2.6)
 project(ENGINE)
 
+string(TOLOWER "${CMAKE_CXX_COMPILER_ID}" COMP)
+string(TOLOWER "${CMAKE_SYSTEM_NAME}" PLATFORM)
+string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" ARCH)
+message("${COMP}-${PLATFORM}-${ARCH}")
+
+add_definitions(-DSDL_MAIN_HANDLED)
+
 include_directories(
-src
+  src
+  ${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
 )
 
-if(MSVC)
-include_directories(
-${PROJECT_SOURCE_DIR}/contrib/msvc-windows-i86/include
-)
 link_directories(
-${PROJECT_SOURCE_DIR}/contrib/msvc-windows-i86/lib
+  ${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
 )
+if(MINGW)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s -static")
+  add_definitions(-DGLEW_STATIC)
+  set(STATIC_LIBS imm32 iconv winmm ole32 gdi32 oleaut32 version)
+  set(LIBGLEW glew32)
+  set(LIBSDL2 SDL2)
+elseif(MSVC)
+  add_definitions(-DGLEW_STATIC)
+  set(STATIC_LIBS imm32 winmm setupapi version)
+  set(LIBGLEW glew32s)
+  set(LIBSDL2 SDL2-static)
 endif()
 
 add_library(rend
@@ -25,25 +40,27 @@ add_library(rend
   src/rend/Util.cpp
 )
 if(MSVC OR MINGW)
-  target_link_libraries(rend glew32 opengl32)
+  target_link_libraries(rend ${LIBGLEW} opengl32)
 else()
   target_link_libraries(rend GLEW GL)
 endif()
 
-add_library(engine 
+add_library(engine
+  src/engine/Core.cpp
+  src/engine/Entity.cpp
+  src/engine/Component.cpp
+  src/engine/Exception.cpp
+  src/engine/Renderer.cpp
 
-src/engine/Core.cpp
-src/engine/Entity.cpp
-
-src/engine/Core.h
-src/engine/Entity.h
-src/engine/Component.h
+  src/engine/Core.h
+  src/engine/Entity.h
+  src/engine/Component.h
+  src/engine/Exception.h
+  src/engine/Renderer.h
 )
-target_link_libraries(engine rend)
+target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS})
 
-add_executable(demo 
-src/demo/main.cpp
+add_executable(demo
+  src/demo/main.cpp
 )
-
 target_link_libraries(demo engine)
-

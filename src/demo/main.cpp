@@ -1,14 +1,15 @@
 #include <engine/myengine.h>
 
+#include <iostream>
+#include <GL/glew.h>
+
 using namespace myengine;
 
-struct Renderer: public Component
-{
-	int health;
-};
+
 
 int main()
 {
+
 	std::shared_ptr<Core> core = Core::initialize();
 	std::shared_ptr<Entity> pe = core->addEntity();
 	std::shared_ptr<Renderer> pc = pe->addComponent<Renderer>();
