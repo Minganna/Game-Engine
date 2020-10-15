@@ -2,10 +2,8 @@
 #include "Entity.h"
 #include "Exception.h"
 
-#define WINDOW_WIDTH 800;
-#define WINDOW_HEIGHT 800;
-
-
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 
 
 namespace myengine
@@ -16,7 +14,7 @@ namespace myengine
 		std::shared_ptr<Core> rtn = std::make_shared<Core>();
 		rtn->window = SDL_CreateWindow("myengine",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			800, 600,
+			WINDOW_WIDTH, WINDOW_HEIGHT,
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 		if (!rtn->window)
