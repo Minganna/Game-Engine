@@ -310,7 +310,7 @@ void Shader::parse(const std::string& source)
   cache.clear();
 
   std::string vertSrc = "";
-  vertSrc += "#version 120\n";
+  //vertSrc += "#version 120\n";
   vertSrc += "#define VERTEX\n";
   vertSrc += source;
   src = vertSrc.c_str();
@@ -345,8 +345,9 @@ void Shader::parse(const std::string& source)
   }
 
   std::string fragSrc = "";
-  fragSrc += "#version 120\n";
+  //fragSrc += "#version 120\n";
   fragSrc += "#define FRAGMENT\n";
+  fragSrc += "precision mediump float;\n";
   fragSrc += source;
   src = fragSrc.c_str();
 

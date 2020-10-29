@@ -20,6 +20,8 @@ namespace myengine
 
 		void start();
 
+		static void loop();
+
 	private:
 		std::vector<std::shared_ptr<Entity>> entities;
 		std::weak_ptr<Core> self;

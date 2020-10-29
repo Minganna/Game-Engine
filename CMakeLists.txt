@@ -8,14 +8,28 @@ message("${COMP}-${PLATFORM}-${ARCH}")
 
 add_definitions(-DSDL_MAIN_HANDLED)
 
-include_directories(
-  src
-  ${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
-)
+if(MSVC OR MINGW)
+	include_directories(
+  	src
+  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
+	)
 
-link_directories(
-  ${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
-)
+	link_directories(
+  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
+	)
+else()
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2")
+endif()
+	
+include_directories(
+  	src
+  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
+	)
+
+	link_directories(
+  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
+	)
+
 if(MINGW)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s -static")
   add_definitions(-DGLEW_STATIC)
@@ -29,6 +43,9 @@ elseif(MSVC)
   set(LIBSDL2 SDL2-static)
 endif()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s DISABLE_EXCEPTION_CATCHING=0")
+
+
 add_library(rend
   src/rend/Exception.cpp
   src/rend/Context.cpp
@@ -39,6 +56,7 @@ add_library(rend
   src/rend/Mesh.cpp
   src/rend/Util.cpp
 )
+
 if(MSVC OR MINGW)
   target_link_libraries(rend ${LIBGLEW} opengl32)
 else()
@@ -59,6 +77,8 @@ add_library(engine
   src/engine/Renderer.h
 )
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS})
+
+set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
 add_executable(demo
   src/demo/main.cpp

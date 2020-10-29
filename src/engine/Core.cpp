@@ -2,12 +2,18 @@
 #include "Entity.h"
 #include "Exception.h"
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif  
+
+
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
 
 namespace myengine
 {
+	std::shared_ptr<Core> core;
 
 	std::shared_ptr<Core> Core::initialize()
 	{
@@ -32,6 +38,7 @@ namespace myengine
 		rtn->context = rend::Context::initialize();
 
 		rtn->self = rtn;
+		core = rtn;
 
 		return rtn;
 	}
@@ -47,8 +54,31 @@ namespace myengine
 		return rtn;
 	}
 
-	void Core::start()
+	void Core::loop()
 	{
+
+		for (size_t ei = 0; ei < core->entities.size(); ei++)
+		{
+			core->entities.at(ei)->tick();
+		}
+
+		glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		for (size_t ei = 0; ei < core->entities.size(); ei++)
+		{
+			core->entities.at(ei)->render();
+		}
+
+		SDL_GL_SwapWindow(core->window);
+		
+	}
+
+	void Core::start()
+	{	
+		#ifdef EMSCRIPTEN
+			emscripten_set_main_loop(Core::loop, 0, 1);
+		#else
 		bool running = true;
 		SDL_Event e = { 0 };
 
@@ -77,6 +107,8 @@ namespace myengine
 
 			SDL_GL_SwapWindow(window);
 		}
+		#endif
+
 	}
 
 }
