@@ -1,11 +1,15 @@
 #include <vector>
 #include <memory>
+#include <glm/glm.hpp>
+
+
 
 namespace myengine
 {
 
 	struct Component;
 	struct Core;
+	struct Exception;
 
 	struct Entity
 	{
@@ -24,8 +28,24 @@ namespace myengine
 			return rtn;
 		}
 
+		template <typename T>
+		std::shared_ptr<T> getComponent()
+		{
+			for (size_t ci = 0; ci < components.size(); ci++)
+			{
+				std::shared_ptr<T> rtn = std::dynamic_pointer_cast<T>(components.at(ci));
+				if (rtn)
+				{
+					return rtn;
+				}
+			}
+			throw Exception("Cannot find requested component type");
+		}
+
 		void tick();
 		void render();
+
+		void destroy();
 
 		std::shared_ptr<Core> getCore();
 
@@ -33,6 +53,7 @@ namespace myengine
 		std::vector<std::shared_ptr<Component>> components;
 		std::weak_ptr<Core> core;
 		std::weak_ptr<Entity> self;
+		bool destroyed;
 
 	};
 

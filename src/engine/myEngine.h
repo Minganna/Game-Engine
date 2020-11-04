@@ -5,7 +5,15 @@
 #include "Entity.h"
 #include "Component.h"
 #include "Renderer.h"
+#include "Transform.h"
+#include "Exception.h"
+#include <glm/glm.hpp>
 
+namespace myengine
+{
+	using namespace glm;
+}
 using namespace myengine;
+
 
 #endif

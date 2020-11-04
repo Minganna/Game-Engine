@@ -20,6 +20,11 @@ namespace myengine
 		}
 	}
 
+	void Entity::destroy()
+	{
+		destroyed = true;
+	}
+
 	std::shared_ptr<Core> Entity::getCore()
 	{
 		return core.lock();

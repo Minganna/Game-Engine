@@ -8,27 +8,20 @@ message("${COMP}-${PLATFORM}-${ARCH}")
 
 add_definitions(-DSDL_MAIN_HANDLED)
 
-if(MSVC OR MINGW)
-	include_directories(
-  	src
-  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
-	)
+if(NOT MSVC AND NOT MINGW)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=0")
+	set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
-	link_directories(
-  	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
-	)
-else()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2")
 endif()
 	
 include_directories(
   	src
   	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/include
-	)
+)
 
-	link_directories(
+link_directories(
   	${PROJECT_SOURCE_DIR}/contrib/${COMP}-${PLATFORM}-${ARCH}/lib
-	)
+)
 
 if(MINGW)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s -static")
@@ -43,7 +36,7 @@ elseif(MSVC)
   set(LIBSDL2 SDL2-static)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s DISABLE_EXCEPTION_CATCHING=0")
+
 
 
 add_library(rend
@@ -69,16 +62,17 @@ add_library(engine
   src/engine/Component.cpp
   src/engine/Exception.cpp
   src/engine/Renderer.cpp
+  src/engine/Transform.cpp
 
   src/engine/Core.h
   src/engine/Entity.h
   src/engine/Component.h
   src/engine/Exception.h
   src/engine/Renderer.h
+  src/engine/Transform.h
 )
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS})
 
-set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
 add_executable(demo
   src/demo/main.cpp

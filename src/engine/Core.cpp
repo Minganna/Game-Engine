@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "Entity.h"
 #include "Exception.h"
+#include "Transform.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -48,9 +49,10 @@ namespace myengine
 		std::shared_ptr<Entity> rtn = std::make_shared<Entity>();
 		rtn->core = self;
 		rtn->self = rtn;
+		rtn->destroyed = false;
 
 		entities.push_back(rtn);
-
+		rtn->addComponent<Transform>();
 		return rtn;
 	}
 
@@ -59,7 +61,24 @@ namespace myengine
 
 		for (size_t ei = 0; ei < core->entities.size(); ei++)
 		{
-			core->entities.at(ei)->tick();
+			try
+			{
+				core->entities.at(ei)->tick();
+				//core->entities.at(ei)->getComponent<Transform>()->RotateY(45.0f);
+			}
+			catch (const std::exception&)
+			{
+				core->entities.at(ei)->destroy();
+			}
+			
+		}
+		for (size_t ei = 0; ei < core->entities.size(); ei++)
+		{
+			if (core->entities.at(ei)->destroyed)
+			{
+				core->entities.erase(core->entities.begin() + ei);
+				ei--;
+			}
 		}
 
 		glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
@@ -92,20 +111,7 @@ namespace myengine
 				}
 			}
 
-			for (size_t ei = 0; ei < entities.size(); ei++)
-			{
-				entities.at(ei)->tick();
-			}
-
-			glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			for (size_t ei = 0; ei < entities.size(); ei++)
-			{
-				entities.at(ei)->render();
-			}
-
-			SDL_GL_SwapWindow(window);
+			loop();
 		}
 		#endif
 
