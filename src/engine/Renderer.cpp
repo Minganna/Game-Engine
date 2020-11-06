@@ -16,19 +16,28 @@ void Renderer::onInitialize()
   const char* src =
     "\n#ifdef VERTEX\n                       " \
     "attribute vec3 a_Position;              " \
+	"attribute vec2 a_TexCoord;              " \
+	"                                        " \
     "uniform mat4 u_Model;                   " \
 	"uniform mat4 u_Projection;              " \
+	"                                        " \
+	"varying vec2 ex_TexCoord;               " \
     "void main()                             " \
     "{                                       " \
     "  gl_Position = u_Projection * u_Model * vec4(a_Position, 1); " \
+	"  ex_TexCoord = a_TexCoord;                                     " \
     "}                                       " \
     "                                        " \
     "\n#endif\n                              " \
     "\n#ifdef FRAGMENT\n                     " \
     "                                        " \
+	"uniform sampler2D in_Texture;           " \
+	" varying vec2 ex_TexCoord;              " \
+	"                                        " \
     "void main()                             " \
     "{                                       " \
-    "  gl_FragColor = vec4(1, 0, 0, 1);      " \
+	"  vec4 tex = texture2D(in_Texture,ex_TexCoord); " \
+    "  gl_FragColor = tex;                   " \
     "}                                       " \
     "                                        " \
     "\n#endif\n                              ";
@@ -45,9 +54,8 @@ void Renderer::onInitialize()
 void Renderer::onRender()
 {
   shader->setAttribute("a_Position", shape);
-  //shader->setUniform("u_Model", glm::translate(glm::mat4(1.0f),glm::vec3(0.0f, 0.0f, -10.0f)));
   shader->setUniform("u_Model", getEntity()->getComponent<Transform>()->getModel());
-  shader->setUniform("u_Projection", glm::perspective(glm::radians(45.0f),1.0f,0.01f,100.0f));
+  shader->setUniform("u_Projection", getCore()->getPerspective());
   shader->render();
 }
 

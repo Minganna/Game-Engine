@@ -36,8 +36,8 @@ void Transform::setScale(glm::vec3 scale)
 
 void Transform::RotateY(float rot)
 {
-	Angle = glm::radians(rot);
-	model = glm::rotate(model, Angle, Rotation);
+	Angle += glm::radians(rot);
+
 }
 
 

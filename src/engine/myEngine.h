@@ -7,6 +7,11 @@
 #include "Renderer.h"
 #include "Transform.h"
 #include "Exception.h"
+#include "ResourceManager.h"
+#include "Resource.h"
+#include "Texture.h"
+#include "MeshRenderer.h"
+
 #include <glm/glm.hpp>
 
 namespace myengine

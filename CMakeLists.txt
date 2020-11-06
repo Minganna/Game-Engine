@@ -63,6 +63,10 @@ add_library(engine
   src/engine/Exception.cpp
   src/engine/Renderer.cpp
   src/engine/Transform.cpp
+  src/engine/ResourceManager.cpp
+  src/engine/Resource.cpp
+  src/engine/Texture.cpp
+  src/engine/MeshRenderer.cpp
 
   src/engine/Core.h
   src/engine/Entity.h
@@ -70,11 +74,18 @@ add_library(engine
   src/engine/Exception.h
   src/engine/Renderer.h
   src/engine/Transform.h
+  src/engine/ResourceManager.h
+  src/engine/Resource.h
+  src/engine/Texture.h
+  src/engine/stb_image.h
+  src/engine/MeshRenderer.h
 )
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS})
 
 
 add_executable(demo
   src/demo/main.cpp
+  src/demo/Player.cpp
+  src/demo/Player.h
 )
 target_link_libraries(demo engine)

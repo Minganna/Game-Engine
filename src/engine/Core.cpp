@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Exception.h"
 #include "Transform.h"
+#include "ResourceManager.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -19,9 +20,11 @@ namespace myengine
 	std::shared_ptr<Core> Core::initialize()
 	{
 		std::shared_ptr<Core> rtn = std::make_shared<Core>();
+		rtn->setWidth(WINDOW_WIDTH);
+		rtn->setHeight(WINDOW_HEIGHT);
 		rtn->window = SDL_CreateWindow("myengine",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			WINDOW_WIDTH, WINDOW_HEIGHT,
+			rtn->getWidth(), rtn->getHeight(),
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 		if (!rtn->window)
@@ -39,7 +42,9 @@ namespace myengine
 		rtn->context = rend::Context::initialize();
 
 		rtn->self = rtn;
+		rtn->assets = std::make_shared<ResourceManager>();
 		core = rtn;
+		rtn->assets->self = rtn->assets;
 
 		return rtn;
 	}
@@ -56,6 +61,11 @@ namespace myengine
 		return rtn;
 	}
 
+	std::shared_ptr<ResourceManager> Core::GetResource()
+	{
+		return assets;
+	}
+
 	void Core::loop()
 	{
 
@@ -64,7 +74,6 @@ namespace myengine
 			try
 			{
 				core->entities.at(ei)->tick();
-				//core->entities.at(ei)->getComponent<Transform>()->RotateY(45.0f);
 			}
 			catch (const std::exception&)
 			{
@@ -91,6 +100,13 @@ namespace myengine
 
 		SDL_GL_SwapWindow(core->window);
 		
+	}
+
+	glm::mat4 Core::getPerspective()
+	{
+		glm::mat4 perspectiveView(1.0f);
+		perspectiveView = glm::perspective(glm::radians(45.0f), 1.0f, 0.01f, 100.0f);
+		return perspectiveView;
 	}
 
 	void Core::start()
