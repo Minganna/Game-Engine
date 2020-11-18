@@ -45,6 +45,7 @@ namespace myengine
 
 		rtn->self = rtn;
 		rtn->assets = std::make_shared<ResourceManager>();
+		rtn->assets->core = rtn;
 		core = rtn;
 		rtn->assets->self = rtn->assets;
 

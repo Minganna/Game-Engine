@@ -1,30 +1,32 @@
 #pragma once
 #include "Resource.h"
 #include <string>
-#include <GL\glew.h>
+#include <GL/glew.h>
+#include <rend/rend.h>
 
 
 
 namespace myengine
 {
 
-	class Texture: public Resource
+	struct Renderer;
+	struct Texture: public Resource
 	{
 		friend struct ::myengine::Resource;
+		friend struct ::myengine::Renderer;
 	public:
 		
 		void OnLoad(std::string fileLoc);
 
-		bool LoadTexture();
+
 		bool LoadtextureA();
 
-		void UseTexture();
-		void ClearTexture();
 
 		~Texture();
 
 	private:
-		GLuint textureID;
+		//GLuint textureID;
+		std::shared_ptr<rend::Texture> texture;
 		int width, height, bitDepth;
 
 		std::string fileLocation;

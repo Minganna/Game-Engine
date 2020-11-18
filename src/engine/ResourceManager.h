@@ -41,8 +41,11 @@ namespace myengine
 			return rtn;
 		}
 
+		std::shared_ptr<Core> GetCore();
+
 	private:
 		std::weak_ptr<ResourceManager> self;
+		std::weak_ptr<Core> core;
 		std::list<std::shared_ptr<Resource>> resources;
 	};
 

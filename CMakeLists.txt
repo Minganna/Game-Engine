@@ -51,7 +51,7 @@ add_library(rend
 )
 
 if(MSVC OR MINGW)
-  target_link_libraries(rend ${LIBGLEW} opengl32)
+  target_link_libraries(rend ${LIBGLEW} opengl32 )
 else()
   target_link_libraries(rend GLEW GL)
 endif()
@@ -82,7 +82,11 @@ add_library(engine
   src/engine/MeshRenderer.h
   src/engine/Keyboard.h
 )
-target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS})
+if(MSVC OR MINGW)
+target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} OpenAL32)
+else()
+target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} AL)
+endif()
 
 
 add_executable(demo

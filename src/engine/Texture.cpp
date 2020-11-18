@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Core.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -8,7 +9,6 @@ namespace myengine
 
 	void Texture::OnLoad(std::string fileLoc)
 	{
-		textureID = 0;
 		width = 0;
 		height = 0;
 		bitDepth = 0;
@@ -18,73 +18,42 @@ namespace myengine
 
 	bool Texture::LoadtextureA()
 	{
-		unsigned char* texData = stbi_load(fileLocation.c_str(), &width, &height, &bitDepth, 0);
+		unsigned char* texData = stbi_load(fileLocation.c_str(), &width, &height, &bitDepth, 4);
 		if (!texData)
 		{
 			printf("Failed to find: %s\n", fileLocation.c_str());
 			return false;
 		}
 
-		glGenTextures(1, &textureID);
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		texture = GetCore()->context->createTexture();
+		
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		texture->setSize(width, height);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		stbi_image_free(texData);
-
-		return true;
-	}
-
-	bool Texture::LoadTexture()
-	{
-		unsigned char* texData = stbi_load(fileLocation.c_str(), &width, &height, &bitDepth, 0);
-		if (!texData)
+		for (int y = 0; y < height; y++)
 		{
-			printf("Failed to find: %s\n", fileLocation);
-			return false;
+			for (int x = 0; x < width; x++)
+			{
+				int r = y * width * 4 + x * 4;
+
+				texture->setPixel(x, y, glm::vec4(
+					texData[r] / 255.0f,
+					texData[r + 1] / 255.0f,
+					texData[r + 2] / 255.0f,
+					texData[r + 3] / 255.0f));
+
+			}
 		}
 
-		glGenTextures(1, &textureID);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-
 		stbi_image_free(texData);
 
 		return true;
 	}
 
-	void Texture::UseTexture()
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-	}
-
-	void Texture::ClearTexture()
-	{
-		glDeleteTextures(1, &textureID);
-
-	}
 
 
 	Texture::~Texture()
 	{
-		ClearTexture();
+	
 	}
 }

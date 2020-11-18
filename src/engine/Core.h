@@ -11,10 +11,12 @@ namespace myengine
 	struct Entity;
 	struct ResourceManager;
 	struct Keyboard;
+	struct Texture;
 
 	struct Core
 	{
 		friend struct myengine::Renderer;
+		friend struct myengine::Texture;
 
 		static std::shared_ptr<Core> initialize();
 

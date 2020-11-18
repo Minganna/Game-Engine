@@ -1,6 +1,7 @@
 #include <vector>
 #include <memory>
 #include <glm/glm.hpp>
+#include "Exception.h"
 
 
 
@@ -9,7 +10,6 @@ namespace myengine
 
 	struct Component;
 	struct Core;
-	struct Exception;
 
 	struct Entity
 	{

@@ -21,7 +21,7 @@ int main()
 	pe2->getComponent<Transform>()->setScale(vec3(2.0f, 2.0f, 2.0f));
 	std::shared_ptr<Player> player=pe2->addComponent<Player>();
 	//core->GetResource()->LoadResource<Texture>("resources/brick.png");
-	pe2->addComponent<MeshRenderer>()->setTexture("resources/brick.png");
+	pe2->addComponent<MeshRenderer>()->setTexture("resources/Textures/brick.png");
 	
 	
 	std::shared_ptr<Renderer> pc2 = pe2->addComponent<Renderer>();

@@ -8,11 +8,11 @@ namespace myengine
 {
 	void MeshRenderer::onRender()
 		{
-		tex->UseTexture();
+	
 		}
 	void MeshRenderer::setTexture(std::string path)
 	{
-		tex=getCore()->GetResource()->LoadResource<Texture>("resources/brick.png");
+		tex=getCore()->GetResource()->LoadResource<Texture>(path);
 	}
 	void MeshRenderer::setTexture(std::shared_ptr<Texture> texture)
 	{
