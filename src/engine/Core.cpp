@@ -3,6 +3,7 @@
 #include "Exception.h"
 #include "Transform.h"
 #include "ResourceManager.h"
+#include "Keyboard.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -40,6 +41,7 @@ namespace myengine
 		}
 
 		rtn->context = rend::Context::initialize();
+		rtn->keyboard = std::make_shared<Keyboard>();
 
 		rtn->self = rtn;
 		rtn->assets = std::make_shared<ResourceManager>();
@@ -47,6 +49,11 @@ namespace myengine
 		rtn->assets->self = rtn->assets;
 
 		return rtn;
+	}
+
+	std::shared_ptr<Keyboard> Core::getKeyboard()
+	{
+		return keyboard;
 	}
 
 	std::shared_ptr<Entity> Core::addEntity()
@@ -125,7 +132,21 @@ namespace myengine
 				{
 					running = false;
 				}
+				else if (e.type == SDL_KEYDOWN)
+				{
+					keyboard->keys.push_back(e.key.keysym.sym);
+				}
+				else if (e.type == SDL_KEYUP)
+				{
+					for (std::vector<int>::iterator it = keyboard->keys.begin();
+						it != keyboard->keys.end();)
+					{
+						if (*it == e.key.keysym.sym) it = keyboard->keys.erase(it);
+						else it++;
+					}
+				}
 			}
+			
 
 			loop();
 		}

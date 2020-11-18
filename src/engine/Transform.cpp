@@ -29,6 +29,12 @@ void Transform::setPosition(glm::vec3 position)
 	Position = position;
 }
 
+void Transform::RotateX(float rot)
+{
+	Rotation = glm::vec3(1.0f, 0.0f, 0.0f);
+	Angle += glm::radians(rot);
+}
+
 void Transform::setScale(glm::vec3 scale)
 {
 	Scale = scale;
@@ -36,8 +42,15 @@ void Transform::setScale(glm::vec3 scale)
 
 void Transform::RotateY(float rot)
 {
+	Rotation = glm::vec3(0.0f, 1.0f, 0.0f);
 	Angle += glm::radians(rot);
 
+}
+
+void Transform::RotateZ(float rot)
+{
+	Rotation = glm::vec3(0.0f, 0.0f, 1.0f);
+	Angle += glm::radians(rot);
 }
 
 

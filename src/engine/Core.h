@@ -10,6 +10,7 @@ namespace myengine
 	struct Renderer;
 	struct Entity;
 	struct ResourceManager;
+	struct Keyboard;
 
 	struct Core
 	{
@@ -19,6 +20,7 @@ namespace myengine
 
 		std::shared_ptr<Entity> addEntity();
 		std::shared_ptr<ResourceManager> GetResource();
+		std::shared_ptr<Keyboard> getKeyboard();
 
 		void start();
 
@@ -39,6 +41,7 @@ namespace myengine
 		SDL_Window* window;
 		SDL_GLContext glContext;
 		std::shared_ptr<rend::Context> context;
+		std::shared_ptr<Keyboard> keyboard;
 		int width;
 		int height;
 	};
