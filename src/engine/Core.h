@@ -1,7 +1,5 @@
 #include <SDL2/SDL.h>
 #include <rend/rend.h>
-
-
 #include <memory>
 #include <vector>
 
@@ -12,11 +10,15 @@ namespace myengine
 	struct ResourceManager;
 	struct Keyboard;
 	struct Texture;
+	struct Shaders;
+	struct Model;
 
 	struct Core
 	{
 		friend struct myengine::Renderer;
 		friend struct myengine::Texture;
+		friend struct myengine::Shaders;
+		friend struct myengine::Model;
 
 		static std::shared_ptr<Core> initialize();
 

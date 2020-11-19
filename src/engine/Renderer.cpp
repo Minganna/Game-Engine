@@ -5,6 +5,10 @@
 #include "Exception.h"
 #include "ResourceManager.h"
 #include "Texture.h"
+#include "Shader.h"
+#include "Model.h"
+#include <fstream>
+#include <string>
 
 #include <iostream>
 
@@ -15,10 +19,13 @@ void Renderer::onInitialize()
 {
   std::cout << "Initializing" << std::endl;
 
-  const char* src =
+  shaderfile = getCore()->GetResource()->LoadResource<Shader>("resources/Shaders/vertfrag.shader");
+
+  const char* src = 
     "\n#ifdef VERTEX\n                       " \
     "attribute vec3 a_Position;              " \
 	"attribute vec2 a_TexCoord;              " \
+	"attribute vec3 a_Normal;              " \
 	"                                        " \
     "uniform mat4 u_Model;                   " \
 	"uniform mat4 u_Projection;              " \
@@ -28,6 +35,8 @@ void Renderer::onInitialize()
     "{                                       " \
     "  gl_Position = u_Projection * u_Model * vec4(a_Position, 1); " \
 	"  ex_TexCoord = a_TexCoord;                                     " \
+	"                                        " \
+	"  if(a_Normal.x==9) gl_Position.x=7;    " \
     "}                                       " \
     "                                        " \
     "\n#endif\n                              " \
@@ -44,24 +53,21 @@ void Renderer::onInitialize()
     "                                        " \
     "\n#endif\n                              ";
 
+  //src = shaderfile->shaderID;
+  //printf(shaderfile->shaderID);
+
   shader = getCore()->context->createShader();
   shader->parse(src);
 
-  shape = getCore()->context->createBuffer();
-  shape->add(rend::vec3(0, 0.5f,0.0f));
-  shape->add(rend::vec3(-0.5f, -0.5f,0.0f));
-  shape->add(rend::vec3(0.5f, -0.5f,0.0f));
-  coord = getCore()->context->createBuffer();
-  coord->add(rend::vec2(0.5f, 1.0f));
-  coord->add(rend::vec2(0.0f, 0.0f));
-  coord->add(rend::vec2(1.0f, 1.0f));
-  texture = getCore()->GetResource()->LoadResource<Texture>("resources/Textures/brick.png");
+
+  shape = getCore()->GetResource()->LoadResource<Model>("resources/Models/curuthers.obj");
+
+  texture = getCore()->GetResource()->LoadResource<Texture>("resources/Textures/curuthers_diffuse.png");
 }
 
 void Renderer::onRender()
 {
-  shader->setAttribute("a_Position", shape);
-  shader->setAttribute("a_TexCoord", coord);
+  shader->setMesh(shape->shape);
   shader->setUniform("u_Model", getEntity()->getComponent<Transform>()->getModel());
   shader->setUniform("u_Projection", getCore()->getPerspective());
   shader->setSampler("in_Texture", texture->texture);

@@ -2,7 +2,7 @@
 #include "Core.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
+#include "Exception.h"
 
 namespace myengine
 {
@@ -21,7 +21,8 @@ namespace myengine
 		unsigned char* texData = stbi_load(fileLocation.c_str(), &width, &height, &bitDepth, 4);
 		if (!texData)
 		{
-			printf("Failed to find: %s\n", fileLocation.c_str());
+			std::string error=("Failed to find: %s\n", fileLocation.c_str());
+			throw Exception(error);
 			return false;
 		}
 

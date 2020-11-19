@@ -68,6 +68,8 @@ add_library(engine
   src/engine/Texture.cpp
   src/engine/MeshRenderer.cpp
   src/engine/Keyboard.cpp
+  src/engine/Shader.cpp
+  src/engine/Model.cpp
 
   src/engine/Core.h
   src/engine/Entity.h
@@ -81,6 +83,8 @@ add_library(engine
   src/engine/stb_image.h
   src/engine/MeshRenderer.h
   src/engine/Keyboard.h
+  src/engine/Shader.h
+  src/engine/Model.h
 )
 if(MSVC OR MINGW)
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} OpenAL32)
