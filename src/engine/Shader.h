@@ -24,7 +24,7 @@ namespace myengine
 		~Shader();
 
 	private:
-		const char* shaderID;
+		std::string shaderContent;
 		std::string fileLocation;
 	};
 }

@@ -1,4 +1,6 @@
 #include <SDL2/SDL.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #include <rend/rend.h>
 #include <memory>
 #include <vector>
@@ -48,6 +50,9 @@ namespace myengine
 		std::shared_ptr<Keyboard> keyboard;
 		int width;
 		int height;
+		ALCdevice* device;
+		ALCcontext* Audiocontext;
+
 	};
 
 }

@@ -12,11 +12,10 @@ namespace myengine
 	void Shader::OnLoad(std::string fileLoc)
 	{
 		fileLocation = fileLoc;
-		shaderID = "";
-		printf(fileLocation.c_str());
+		shaderContent = "";
 		std::string shaderfile= ReadFile(fileLocation.c_str());
-		std::cout << shaderfile<<std::endl;
-		shaderID = shaderfile.c_str();
+		std::cout << "["<<shaderfile<<"]"<<std::endl;
+		shaderContent = shaderfile;
 
 	}
 
@@ -37,7 +36,7 @@ namespace myengine
 		while (!fileStream.eof())
 		{
 			std::getline(fileStream, line);
-			content.append(line + "\n");
+			content+=line + "\n";
 		}
 
 		fileStream.close();

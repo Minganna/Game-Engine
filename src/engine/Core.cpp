@@ -5,6 +5,8 @@
 #include "ResourceManager.h"
 #include "Keyboard.h"
 
+
+
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
 #endif  
@@ -39,6 +41,26 @@ namespace myengine
 		{
 			throw Exception("Failed to create OpenGL context");
 		}
+
+		/*initialize Audio
+		rtn->device = alcOpenDevice(NULL);
+		if (!rtn->device)
+		{
+			throw Exception("Failed to open default device");
+		}
+		rtn->Audiocontext = alcCreateContext(rtn->device, NULL);
+		if (!rtn->context)
+		{
+			alcCloseDevice(rtn->device);
+			throw Exception("Failed to create context");
+		}
+		if (!alcMakeContextCurrent(rtn->Audiocontext))
+		{
+			alcDestroyContext(rtn->Audiocontext);
+			alcCloseDevice(rtn->device);
+			throw Exception("Failed to make context current");
+		}
+		end of Audio initialization*/
 
 		rtn->context = rend::Context::initialize();
 		rtn->keyboard = std::make_shared<Keyboard>();
