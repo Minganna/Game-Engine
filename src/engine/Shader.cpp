@@ -14,7 +14,6 @@ namespace myengine
 		fileLocation = fileLoc;
 		shaderContent = "";
 		std::string shaderfile= ReadFile(fileLocation.c_str());
-		std::cout << "["<<shaderfile<<"]"<<std::endl;
 		shaderContent = shaderfile;
 
 	}

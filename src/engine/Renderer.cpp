@@ -15,18 +15,18 @@
 namespace myengine
 {
 
-void Renderer::onInitialize()
+void Renderer::onInitialize(std::string shaderpath,std::string texurepath,std::string modelpath)
 {
   std::cout << "Initializing" << std::endl;
 
-  shaderfile = getCore()->GetResource()->LoadResource<Shader>("resources/Shaders/vertfrag.shader");
+  shaderfile = getCore()->GetResource()->LoadResource<Shader>(shaderpath);
 
   shader = getCore()->context->createShader();
   shader->parse(shaderfile->shaderContent);
 
 
-  shape = getCore()->GetResource()->LoadResource<Model>("resources/Models/curuthers.obj");
-  texture = getCore()->GetResource()->LoadResource<Texture>("resources/Textures/curuthers_diffuse.png");
+  shape = getCore()->GetResource()->LoadResource<Model>(modelpath);
+  texture = getCore()->GetResource()->LoadResource<Texture>(texurepath);
 }
 
 void Renderer::onRender()

@@ -28,6 +28,17 @@ namespace myengine
 			return rtn;
 		}
 
+
+		template <typename T, typename ... Args>
+		std::shared_ptr<T> addComponent(Args&& ... args)
+		{
+			std::shared_ptr<T> rtn = std::make_shared<T>();
+			rtn->entity = self;
+			components.push_back(rtn);
+			rtn->onInitialize(std::forward<Args>(args)...);
+			return rtn;
+		}
+
 		template <typename T>
 		std::shared_ptr<T> getComponent()
 		{

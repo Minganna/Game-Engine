@@ -11,7 +11,7 @@ struct Shader;
 struct Model;
 struct Renderer : public Component
 {
-  void onInitialize();
+	void onInitialize(std::string shaderpath, std::string texurepath, std::string modelpath);
   void onRender();
 
 private:
