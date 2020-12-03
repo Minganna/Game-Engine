@@ -10,6 +10,8 @@ namespace myengine
 
 	struct Component;
 	struct Core;
+	struct Exception;
+	struct Transform;
 
 	struct Entity
 	{
@@ -37,7 +39,8 @@ namespace myengine
 			components.push_back(rtn);
 			rtn->onInitialize(std::forward<Args>(args)...);
 			return rtn;
-		}
+		}
+
 
 		template <typename T>
 		std::shared_ptr<T> getComponent()
@@ -59,6 +62,7 @@ namespace myengine
 		void destroy();
 
 		std::shared_ptr<Core> getCore();
+		std::shared_ptr<Transform> getTransform();
 
 	private:
 		std::vector<std::shared_ptr<Component>> components;

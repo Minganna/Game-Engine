@@ -28,4 +28,9 @@ namespace myengine
 		return getEntity()->getCore();
 	}
 
+	std::shared_ptr<Transform> Component::getTransform()
+	{
+		return getEntity()->getTransform();
+	}
+
 }

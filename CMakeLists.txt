@@ -70,6 +70,7 @@ add_library(engine
   src/engine/Keyboard.cpp
   src/engine/Shader.cpp
   src/engine/Model.cpp
+  src/engine/Camera.cpp
 
   src/engine/Core.h
   src/engine/Entity.h
@@ -85,6 +86,7 @@ add_library(engine
   src/engine/Keyboard.h
   src/engine/Shader.h
   src/engine/Model.h
+  src/engine/Camera.h
 )
 if(MSVC OR MINGW)
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} OpenAL32)

@@ -1,36 +1,25 @@
-#pragma once
 #include "Component.h"
-#include <vector>
-#include <memory>
-#include <glm/glm.hpp>
 
-
+#include <rend/rend.h>
 
 namespace myengine
 {
-	
-	struct Core;
 
-
-	struct Transform : public Component	
+	struct Transform : public Component
 	{
-
-		glm::mat4 getModel();
 		void onInitialize();
-		void setPosition(glm::vec3 position);
-		void RotateX(float rot);
-		void RotateY(float rot);
-		void RotateZ(float rot);
-		void setScale(glm::vec3 scale);
-		//Transform(glm::vec3 pos, glm::vec3 rot,float angle, glm::vec3 scale);
 
+		rend::mat4 getModel();
+		void setPosition(rend::vec3 position);
+		rend::vec3 getPosition();
+		void translate(float x, float y, float z);
+		void rotate(float x, float y, float z);
 
 	private:
-		glm::mat4 model;
-		glm::vec3 Position;
-		glm::vec3 Rotation;
-		glm::vec3 Scale;
-		float Angle;
+		rend::vec3 position;
+		rend::vec3 rotation;
+		rend::vec3 scale;
 
 	};
+
 }

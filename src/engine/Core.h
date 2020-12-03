@@ -14,19 +14,18 @@ namespace myengine
 	struct Texture;
 	struct Shaders;
 	struct Model;
+	struct Camera;
 
 	struct Core
 	{
-		friend struct myengine::Renderer;
-		friend struct myengine::Texture;
-		friend struct myengine::Shaders;
-		friend struct myengine::Model;
+
 
 		static std::shared_ptr<Core> initialize();
 
 		std::shared_ptr<Entity> addEntity();
 		std::shared_ptr<ResourceManager> GetResource();
 		std::shared_ptr<Keyboard> getKeyboard();
+		std::shared_ptr<Camera> getCamera();
 
 		void start();
 
@@ -41,8 +40,19 @@ namespace myengine
 		glm::mat4 getPerspective();
 
 	private:
+		friend struct myengine::Renderer;
+		friend struct myengine::Texture;
+		friend struct myengine::Shaders;
+		friend struct myengine::Model;
+		friend struct myengine::Camera;
 		std::vector<std::shared_ptr<Entity>> entities;
 		std::shared_ptr<ResourceManager> assets;
+
+		//Camera 
+		std::weak_ptr<Camera> currentCamera;
+		std::vector<std::weak_ptr<Camera>> cameras;
+
+
 		std::weak_ptr<Core> self;
 		SDL_Window* window;
 		SDL_GLContext glContext;

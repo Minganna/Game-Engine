@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Model.h"
+#include "Camera.h"
+
 #include <fstream>
 #include <string>
 
@@ -32,8 +34,10 @@ void Renderer::onInitialize(std::string shaderpath,std::string texurepath,std::s
 void Renderer::onRender()
 {
   shader->setMesh(shape->shape);
-  shader->setUniform("u_Model", getEntity()->getComponent<Transform>()->getModel());
   shader->setUniform("u_Projection", getCore()->getPerspective());
+  shader->setUniform("u_View", getCore()->getCamera()->getView());
+  shader->setUniform("u_Model", getEntity()->getComponent<Transform>()->getModel());
+  
   shader->setSampler("in_Texture", texture->texture);
   shader->render();
 }

@@ -8,6 +8,7 @@ namespace myengine
 
 	struct Entity;
 	struct Core;
+	struct Transform;
 
 	struct Component
 	{
@@ -23,6 +24,7 @@ namespace myengine
 
 		std::shared_ptr<Entity> getEntity();
 		std::shared_ptr<Core> getCore();
+		std::shared_ptr<Transform> getTransform();
 
 	private:
 		std::weak_ptr<Entity> entity;

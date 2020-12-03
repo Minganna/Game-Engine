@@ -23,12 +23,18 @@ int main()
 
 	std::shared_ptr<Entity> pe2 = core->addEntity();
 	pe2->getComponent<Transform>()->setPosition(vec3(-1.0f, 1.0f, -10.0f));
-	pe2->getComponent<Transform>()->setScale(vec3(2.0f, 2.0f, 2.0f));
 	std::shared_ptr<Player> player=pe2->addComponent<Player>();
 	pe2->addComponent<MeshRenderer>()->setTexture(texturepath2);
-	
-	
 	std::shared_ptr<Renderer> pc2 = pe2->addComponent<Renderer>(shaderpath, texturepath2, modelpath);
+
+	std::shared_ptr<Entity> camera = core->addEntity();
+	camera->addComponent<Camera>();
+
+	std::shared_ptr<Entity> c2 = core->addEntity();
+	vec3 p1transform = pe->getTransform()->getPosition();
+	p1transform.z = 0;
+	c2->getTransform()->setPosition(p1transform);
+	c2->addComponent<Camera>();
 
 	core->start();
 

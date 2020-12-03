@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "ResourceManager.h"
 #include "Keyboard.h"
+#include "Camera.h"
 
 
 
@@ -122,11 +123,22 @@ namespace myengine
 
 		glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(400, 0, 400, 600);
 
-		for (size_t ei = 0; ei < core->entities.size(); ei++)
+		for (size_t ci = 0; ci < core->cameras.size(); ci++)
 		{
-			core->entities.at(ei)->render();
+			core->currentCamera = core->cameras.at(ci);
+
+			glClear(GL_DEPTH_BUFFER_BIT);
+			for (size_t ei = 0; ei < core->entities.size(); ei++)
+			{
+				core->entities.at(ei)->render();
+
+			}
+			glViewport(0, 0, 400, 600);
 		}
+
+		
 
 		SDL_GL_SwapWindow(core->window);
 		
@@ -138,6 +150,12 @@ namespace myengine
 		perspectiveView = glm::perspective(glm::radians(45.0f), 1.0f, 0.01f, 100.0f);
 		return perspectiveView;
 	}
+
+	std::shared_ptr<Camera> Core::getCamera()
+	{
+		return currentCamera.lock();
+	}
+
 
 	void Core::start()
 	{	

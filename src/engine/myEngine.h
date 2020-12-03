@@ -12,6 +12,7 @@
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "Keyboard.h"
+#include "Camera.h"
 
 #include <glm/glm.hpp>
 

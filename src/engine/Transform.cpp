@@ -1,59 +1,46 @@
 #include "Transform.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace myengine
 {
 
+	void Transform::onInitialize()
+	{
+		scale = rend::vec3(1, 1, 1);
+	}
 
+	rend::mat4 Transform::getModel()
+	{
+		rend::mat4 rtn(1.0f);
 
-glm::mat4 Transform::getModel()
-{
-	model=glm::mat4(1.0f);
-	model = glm::translate(model, Position);
-	model = glm::rotate(model,Angle,Rotation);
-	model = glm::scale(model, Scale);
-	return model;
-}
+		rtn = rend::translate(rtn, position);
+		rtn = rend::rotate(rtn, rend::radians(rotation.x), rend::vec3(1, 0, 0));
+		rtn = rend::rotate(rtn, rend::radians(rotation.y), rend::vec3(0, 1, 0));
+		rtn = rend::rotate(rtn, rend::radians(rotation.z), rend::vec3(0, 0, 1));
+		rtn = rend::scale(rtn, scale);
 
-void Transform::onInitialize()
-{
-	Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	Rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-	Scale = glm::vec3(1.0f, 1.0f, 1.0f);
-	Angle = glm::radians(0.0f);
-}
+		return rtn;
+	}
 
-void Transform::setPosition(glm::vec3 position)
-{
-	Position = position;
-}
+	void Transform::setPosition(rend::vec3 position)
+	{
+		this->position = position;
+	}
 
-void Transform::RotateX(float rot)
-{
-	Rotation = glm::vec3(1.0f, 0.0f, 0.0f);
-	Angle += glm::radians(rot);
-}
+	rend::vec3 Transform::getPosition()
+	{
+		return position;
+	}
 
-void Transform::setScale(glm::vec3 scale)
-{
-	Scale = scale;
-}
+	void Transform::rotate(float x, float y, float z)
+	{
+		this->rotation += rend::vec3(x, y, z);
+	}
 
-void Transform::RotateY(float rot)
-{
-	Rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-	Angle += glm::radians(rot);
+	void Transform::translate(float x, float y, float z)
+	{
+		rend::vec4 fwd = getModel() * rend::vec4(x, y, z, 0);
 
-}
-
-void Transform::RotateZ(float rot)
-{
-	Rotation = glm::vec3(0.0f, 0.0f, 1.0f);
-	Angle += glm::radians(rot);
-}
-
-
-
+		position += rend::vec3(fwd);
+	}
 
 }
