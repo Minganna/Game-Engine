@@ -21,6 +21,7 @@ namespace myengine
 
 		void render();
 		virtual void onRender();
+		virtual void onDestroy();
 
 		std::shared_ptr<Entity> getEntity();
 		std::shared_ptr<Core> getCore();

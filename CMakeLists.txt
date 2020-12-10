@@ -71,6 +71,8 @@ add_library(engine
   src/engine/Shader.cpp
   src/engine/Model.cpp
   src/engine/Camera.cpp
+  src/engine/Sound.cpp
+  src/engine/SoundSource.cpp
 
   src/engine/Core.h
   src/engine/Entity.h
@@ -82,11 +84,14 @@ add_library(engine
   src/engine/Resource.h
   src/engine/Texture.h
   src/engine/stb_image.h
+  src/engine/stb_vorbis.h
   src/engine/MeshRenderer.h
   src/engine/Keyboard.h
   src/engine/Shader.h
   src/engine/Model.h
   src/engine/Camera.h
+  src/engine/Sound.h
+  src/engine/SoundSource.h
 )
 if(MSVC OR MINGW)
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} OpenAL32)

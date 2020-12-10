@@ -43,14 +43,14 @@ namespace myengine
 			throw Exception("Failed to create OpenGL context");
 		}
 
-		/*initialize Audio
+		//initialize Audio
 		rtn->device = alcOpenDevice(NULL);
 		if (!rtn->device)
 		{
 			throw Exception("Failed to open default device");
 		}
 		rtn->Audiocontext = alcCreateContext(rtn->device, NULL);
-		if (!rtn->context)
+		if (!rtn->Audiocontext)
 		{
 			alcCloseDevice(rtn->device);
 			throw Exception("Failed to create context");
@@ -61,7 +61,7 @@ namespace myengine
 			alcCloseDevice(rtn->device);
 			throw Exception("Failed to make context current");
 		}
-		end of Audio initialization*/
+		//end of Audio initialization
 
 		rtn->context = rend::Context::initialize();
 		rtn->keyboard = std::make_shared<Keyboard>();
@@ -123,7 +123,7 @@ namespace myengine
 
 		glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glViewport(400, 0, 400, 600);
+		glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
 
 		for (size_t ci = 0; ci < core->cameras.size(); ci++)
 		{
@@ -135,7 +135,7 @@ namespace myengine
 				core->entities.at(ei)->render();
 
 			}
-			glViewport(0, 0, 400, 600);
+			glViewport(0, 0, WINDOW_WIDTH / core->cameras.size(), WINDOW_HEIGHT);
 		}
 
 		
@@ -192,6 +192,9 @@ namespace myengine
 			loop();
 		}
 		#endif
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(Audiocontext);
+		alcCloseDevice(device);
 
 	}
 

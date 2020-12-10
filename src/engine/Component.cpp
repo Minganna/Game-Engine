@@ -18,6 +18,8 @@ namespace myengine
 	void Component::onTick() { }
 	void Component::onRender() { }
 
+	void Component::onDestroy(){}
+
 	std::shared_ptr<Entity> Component::getEntity()
 	{
 		return entity.lock();
