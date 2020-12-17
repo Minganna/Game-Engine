@@ -13,6 +13,8 @@
 #include "MeshRenderer.h"
 #include "Keyboard.h"
 #include "Camera.h"
+#include "Sound.h"
+#include "SoundSource.h"
 
 #include <glm/glm.hpp>
 

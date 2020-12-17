@@ -12,11 +12,12 @@ int main()
 {
 
 	std::shared_ptr<Core> core = Core::initialize();
-	std::string shaderpath, modelpath, texturepath, texturepath2;
+	std::string shaderpath, modelpath, texturepath, texturepath2, soundpath;
 	shaderpath = "resources/Shaders/vertfrag.shader";
 	modelpath = "resources/Models/curuthers.obj";
 	texturepath = "resources/Textures/curuthers_diffuse.png";
 	texturepath2 = "resources/Textures/brick.png";
+	soundpath = "resources/Sound Effect/Waterfall loop";
 
 	std::shared_ptr<Entity> pe = core->addEntity();
 	pe->getComponent<Transform>()->setPosition(vec3(0.0f,0.0f,-10.0f));
@@ -33,7 +34,9 @@ int main()
 	c2->addComponent<Camera>();
 	std::shared_ptr<Player> player2 = pe2->addComponent<Player>(c2, 'i', 'k', 'j','l');
 	std::shared_ptr<Renderer> pc2 = pe2->addComponent<Renderer>(shaderpath, texturepath2, modelpath);
-	
+	std::shared_ptr<Entity> pe3 = core->addEntity();
+	std::shared_ptr<Sound> sound = core->GetResource()->LoadResource<Sound>(soundpath);
+	std::shared_ptr<SoundSource> ss = pe3->addComponent<SoundSource>(sound); //the only one
 
 
 

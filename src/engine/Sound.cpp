@@ -2,20 +2,23 @@
 #include "stb_vorbis.h"
 #include "Exception.h"
 
+
+
 namespace myengine
 {
-	void Sound::onLoad(const std::string& path)
+	void Sound::OnLoad(const std::string& path)
 	{
 		alGenBuffers(1, &id);
 		ALenum format = 0;
 		ALsizei freq = 0;
 		std::vector<char> bufferData;
 		loadOgg(path + ".ogg", bufferData, format, freq);
+		bufferData.resize(bufferData.size() - bufferData.size() % 4);
 		alBufferData(id, format, &bufferData.at(0),
 			static_cast<ALsizei>(bufferData.size()), freq);
 	}
 
-	ALuint Sound::loadOgg(const std::string& fileName,
+	void Sound::loadOgg(const std::string& fileName,
 		std::vector<char>& buffer, ALenum& format, ALsizei& freq)
 	{
 		int channels = 0;
@@ -42,6 +45,10 @@ namespace myengine
 		memcpy(&buffer.at(0), output, buffer.size());
 		// Clean up the read data
 		free(output);
+	}
+
+	Sound::~Sound()
+	{
 	}
 
 }

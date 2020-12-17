@@ -22,7 +22,8 @@ namespace myengine
 
 		static std::shared_ptr<Core> initialize();
 
-		std::shared_ptr<Entity> addEntity();
+		/// add a new entity to the scene.
+		std::shared_ptr<Entity> addEntity(); 
 		std::shared_ptr<ResourceManager> GetResource();
 		std::shared_ptr<Keyboard> getKeyboard();
 		std::shared_ptr<Camera> getCamera();
@@ -35,6 +36,12 @@ namespace myengine
 		int getHeight() { return height; };
 
 		//Screen
+		///
+		/// \brief set width
+		///  set the screen width
+		///  \param newWidth new width to assign
+		///
+
 		void setWidth(int newWidth) { width = newWidth; };
 		void setHeight(int newHeight) { height = newHeight; };
 		glm::mat4 getPerspective();

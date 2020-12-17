@@ -11,15 +11,17 @@
 
 namespace myengine
 {
+	struct SoundSource;
 	struct Sound : public Resource
 	{
 		friend struct ::myengine::Resource;
+		friend struct ::myengine::SoundSource;
 	public:
 
-		void onLoad(const std::string& path);
+		void OnLoad(const std::string& path);
 
 
-		ALuint loadOgg(const std::string& fileName,
+		void loadOgg(const std::string& fileName,
 			std::vector<char>& buffer, ALenum& format, ALsizei& freq);
 
 
