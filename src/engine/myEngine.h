@@ -15,6 +15,7 @@
 #include "Camera.h"
 #include "Sound.h"
 #include "SoundSource.h"
+#include "BoxCollider.h"
 
 #include <glm/glm.hpp>
 

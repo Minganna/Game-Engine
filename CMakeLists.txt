@@ -73,6 +73,8 @@ add_library(engine
   src/engine/Camera.cpp
   src/engine/Sound.cpp
   src/engine/SoundSource.cpp
+  src/engine/BoxCollider.cpp
+  src/engine/CollisionManager.cpp	
 
   src/engine/Core.h
   src/engine/Entity.h
@@ -92,6 +94,8 @@ add_library(engine
   src/engine/Camera.h
   src/engine/Sound.h
   src/engine/SoundSource.h
+  src/engine/BoxCollider.h
+  src/engine/CollisionManager.h
 )
 if(MSVC OR MINGW)
 target_link_libraries(engine rend ${LIBSDL2} ${STATIC_LIBS} OpenAL32)

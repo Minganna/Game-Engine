@@ -15,6 +15,7 @@ namespace myengine
 	struct Shaders;
 	struct Model;
 	struct Camera;
+	struct CollisionManager;
 
 	struct Core
 	{
@@ -27,6 +28,8 @@ namespace myengine
 		std::shared_ptr<ResourceManager> GetResource();
 		std::shared_ptr<Keyboard> getKeyboard();
 		std::shared_ptr<Camera> getCamera();
+		std::shared_ptr<CollisionManager> getCollisionManager();
+
 
 		void start();
 
@@ -58,7 +61,8 @@ namespace myengine
 		//Camera 
 		std::weak_ptr<Camera> currentCamera;
 		std::vector<std::weak_ptr<Camera>> cameras;
-
+		//Collision
+		std::shared_ptr<CollisionManager> collisionManager;
 
 		std::weak_ptr<Core> self;
 		SDL_Window* window;

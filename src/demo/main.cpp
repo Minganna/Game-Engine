@@ -26,6 +26,7 @@ int main()
 	std::shared_ptr<Entity> camera = core->addEntity();
 	camera->addComponent<Camera>();
 	std::shared_ptr<Player> player = pe->addComponent<Player>(camera);
+	std::shared_ptr<BoxCollider> collider = pe->addComponent<BoxCollider>();
 
 	std::shared_ptr<Entity> pe2 = core->addEntity();
 	pe2->getComponent<Transform>()->setPosition(vec3(-10.0f, 0.0f, -10.0f));
@@ -34,10 +35,12 @@ int main()
 	c2->addComponent<Camera>();
 	std::shared_ptr<Player> player2 = pe2->addComponent<Player>(c2, 'i', 'k', 'j','l');
 	std::shared_ptr<Renderer> pc2 = pe2->addComponent<Renderer>(shaderpath, texturepath2, modelpath);
+	std::shared_ptr<BoxCollider> collider2 = pe2->addComponent<BoxCollider>();
+
 	std::shared_ptr<Entity> pe3 = core->addEntity();
 	std::shared_ptr<Sound> sound = core->GetResource()->LoadResource<Sound>(soundpath);
 	std::shared_ptr<SoundSource> ss = pe3->addComponent<SoundSource>(sound); //the only one
-
+	
 
 
 

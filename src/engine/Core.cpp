@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "Keyboard.h"
 #include "Camera.h"
+#include "CollisionManager.h"
 
 
 
@@ -71,6 +72,8 @@ namespace myengine
 		rtn->assets->core = rtn;
 		core = rtn;
 		rtn->assets->self = rtn->assets;
+
+		rtn->collisionManager = std::make_shared<CollisionManager>();
 
 		return rtn;
 	}
@@ -154,6 +157,11 @@ namespace myengine
 	std::shared_ptr<Camera> Core::getCamera()
 	{
 		return currentCamera.lock();
+	}
+
+	std::shared_ptr<CollisionManager> Core::getCollisionManager()
+	{
+		return collisionManager;
 	}
 
 
