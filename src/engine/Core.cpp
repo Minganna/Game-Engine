@@ -7,6 +7,9 @@
 #include "Camera.h"
 #include "CollisionManager.h"
 
+#include <iostream>
+
+
 
 
 #ifdef EMSCRIPTEN
@@ -50,15 +53,15 @@ namespace myengine
 		{
 			throw Exception("Failed to open default device");
 		}
-		rtn->Audiocontext = alcCreateContext(rtn->device, NULL);
-		if (!rtn->Audiocontext)
+		rtn->audioContext = alcCreateContext(rtn->device, NULL);
+		if (!rtn->audioContext)
 		{
 			alcCloseDevice(rtn->device);
 			throw Exception("Failed to create context");
 		}
-		if (!alcMakeContextCurrent(rtn->Audiocontext))
+		if (!alcMakeContextCurrent(rtn->audioContext))
 		{
-			alcDestroyContext(rtn->Audiocontext);
+			alcDestroyContext(rtn->audioContext);
 			alcCloseDevice(rtn->device);
 			throw Exception("Failed to make context current");
 		}
@@ -95,7 +98,7 @@ namespace myengine
 		return rtn;
 	}
 
-	std::shared_ptr<ResourceManager> Core::GetResource()
+	std::shared_ptr<ResourceManager> Core::getResource()
 	{
 		return assets;
 	}
@@ -126,19 +129,19 @@ namespace myengine
 
 		glClearColor(0.39f, 0.58f, 0.93f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
-
 		for (size_t ci = 0; ci < core->cameras.size(); ci++)
 		{
 			core->currentCamera = core->cameras.at(ci);
 
 			glClear(GL_DEPTH_BUFFER_BIT);
+			glCullFace(GL_BACK);
+			glViewport(ci * (WINDOW_WIDTH / core->cameras.size()), (core->cameras.size()/2)* (WINDOW_HEIGHT / core->cameras.size()), WINDOW_WIDTH / core->cameras.size(), WINDOW_HEIGHT / core->cameras.size());
 			for (size_t ei = 0; ei < core->entities.size(); ei++)
 			{
 				core->entities.at(ei)->render();
 
 			}
-			glViewport(0, 0, WINDOW_WIDTH / core->cameras.size(), WINDOW_HEIGHT);
+			
 		}
 
 		
@@ -168,8 +171,10 @@ namespace myengine
 	void Core::start()
 	{	
 		#ifdef EMSCRIPTEN
+		std::cout << "emscripten" << std::endl;
 			emscripten_set_main_loop(Core::loop, 0, 1);
 		#else
+		std::cout << " not emscripten" << std::endl;
 		bool running = true;
 		SDL_Event e = { 0 };
 
@@ -201,7 +206,7 @@ namespace myengine
 		}
 		#endif
 		alcMakeContextCurrent(NULL);
-		alcDestroyContext(Audiocontext);
+		alcDestroyContext(audioContext);
 		alcCloseDevice(device);
 
 	}

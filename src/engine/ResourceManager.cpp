@@ -3,7 +3,7 @@
 
 namespace myengine
 {
-	std::shared_ptr<Core> ResourceManager::GetCore()
+	std::shared_ptr<Core> ResourceManager::getCore()
 	{
 		return core.lock();
 	}

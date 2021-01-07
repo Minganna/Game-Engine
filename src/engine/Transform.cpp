@@ -36,6 +36,11 @@ namespace myengine
 		this->rotation += rend::vec3(x, y, z);
 	}
 
+	void Transform::setScale(glm::vec3 newscale)
+	{
+		this->scale = newscale;
+	}
+
 	void Transform::translate(float x, float y, float z)
 	{
 		rend::vec4 fwd = getModel() * rend::vec4(x, y, z, 0);

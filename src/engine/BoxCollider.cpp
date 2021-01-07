@@ -30,6 +30,10 @@ namespace myengine
 	glm::vec3 BoxCollider::getCollisionResponse(glm::vec3 size, glm::vec3 position)
 	{
 		glm::vec3 currentPosition = getEntity()->getTransform()->getPosition() + originPoint;
+		if (currentPosition == position)
+		{
+			return position;
+		}
 		bool right,top,front;
 		if (currentPosition.x>position.x)//check A right to B
 		{
@@ -89,7 +93,7 @@ namespace myengine
 		else
 		{
 			float point1 = boxSize.x+currentPosition.x;
-			float point2 = size.x-position.x;
+			float point2 = position.x - size.x;
 			difX.x = -(point1 - point2);
 		}
 		if (top)
@@ -101,7 +105,7 @@ namespace myengine
 		else
 		{
 			float point1 = boxSize.y + currentPosition.y;
-			float point2 = size.y - position.y;
+			float point2 = position.y-size.y;
 			difY.y = -(point1 - point2);
 		}
 		if (front)
@@ -113,12 +117,12 @@ namespace myengine
 		else
 		{
 			float point1 = boxSize.z + currentPosition.z;
-			float point2 = size.z - position.z;
+			float point2 = position.z - size.z;
 			difZ.z = -(point1 - point2);
 		}
 		glm::vec3 mindiff(0);
 
-		if (difX.length()<difY.length())
+		if (glm::length(difX)< glm::length(difY))
 		{
 			mindiff = difX;
 		}
@@ -126,7 +130,7 @@ namespace myengine
 		{
 			mindiff = difY;
 		}
-		if (difZ.length()<mindiff.length())
+		if (glm::length(difZ)< glm::length(mindiff))
 		{
 			mindiff = difZ;
 		}

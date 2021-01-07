@@ -9,8 +9,9 @@ message("${COMP}-${PLATFORM}-${ARCH}")
 add_definitions(-DSDL_MAIN_HANDLED)
 
 if(NOT MSVC AND NOT MINGW)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=0")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file resources -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=0")
 	set(CMAKE_EXECUTABLE_SUFFIX ".html")
+	
 
 endif()
 	

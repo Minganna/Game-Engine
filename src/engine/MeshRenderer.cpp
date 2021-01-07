@@ -12,7 +12,7 @@ namespace myengine
 		}
 	void MeshRenderer::setTexture(std::string path)
 	{
-		tex=getCore()->GetResource()->LoadResource<Texture>(path);
+		tex=getCore()->getResource()->loadResource<Texture>(path);
 	}
 	void MeshRenderer::setTexture(std::shared_ptr<Texture> texture)
 	{

@@ -21,14 +21,14 @@ void Renderer::onInitialize(std::string shaderpath,std::string texurepath,std::s
 {
   std::cout << "Initializing" << std::endl;
 
-  shaderfile = getCore()->GetResource()->LoadResource<Shader>(shaderpath);
+  shaderfile = getCore()->getResource()->loadResource<Shader>(shaderpath);
 
   shader = getCore()->context->createShader();
   shader->parse(shaderfile->shaderContent);
 
 
-  shape = getCore()->GetResource()->LoadResource<Model>(modelpath);
-  texture = getCore()->GetResource()->LoadResource<Texture>(texurepath);
+  shape = getCore()->getResource()->loadResource<Model>(modelpath);
+  texture = getCore()->getResource()->loadResource<Texture>(texurepath);
 }
 
 void Renderer::onRender()

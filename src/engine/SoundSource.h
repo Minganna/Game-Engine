@@ -12,7 +12,7 @@ namespace myengine
 
 	struct SoundSource : public Component
 	{
-		void onInitialize(std::shared_ptr<Sound> sound);
+		void onInitialize(std::shared_ptr<Sound> sound,float newVolume);
 		void onTick();
 		void onDestroy();
 

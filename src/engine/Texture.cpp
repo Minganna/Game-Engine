@@ -7,16 +7,16 @@
 namespace myengine
 {
 
-	void Texture::OnLoad(std::string fileLoc)
+	void Texture::onLoad(std::string fileLoc)
 	{
 		width = 0;
 		height = 0;
 		bitDepth = 0;
 		fileLocation = fileLoc;
-		LoadtextureA();
+		loadtextureA();
 	}
 
-	bool Texture::LoadtextureA()
+	bool Texture::loadtextureA()
 	{
 		unsigned char* texData = stbi_load(fileLocation.c_str(), &width, &height, &bitDepth, 4);
 		if (!texData)
@@ -26,7 +26,7 @@ namespace myengine
 			return false;
 		}
 
-		texture = GetCore()->context->createTexture();
+		texture = getCore()->context->createTexture();
 		
 
 		texture->setSize(width, height);

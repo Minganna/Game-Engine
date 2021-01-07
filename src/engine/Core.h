@@ -25,7 +25,7 @@ namespace myengine
 
 		/// add a new entity to the scene.
 		std::shared_ptr<Entity> addEntity(); 
-		std::shared_ptr<ResourceManager> GetResource();
+		std::shared_ptr<ResourceManager> getResource();
 		std::shared_ptr<Keyboard> getKeyboard();
 		std::shared_ptr<Camera> getCamera();
 		std::shared_ptr<CollisionManager> getCollisionManager();
@@ -72,7 +72,7 @@ namespace myengine
 		int width;
 		int height;
 		ALCdevice* device;
-		ALCcontext* Audiocontext;
+		ALCcontext* audioContext;
 
 	};
 

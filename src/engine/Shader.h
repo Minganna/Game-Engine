@@ -15,8 +15,8 @@ namespace myengine
 		friend struct ::myengine::Renderer;
 	public:
 
-		void OnLoad(std::string fileLoc);
-		std::string ReadFile(const char* fileLocation);
+		void onLoad(std::string fileLoc);
+		std::string readFile(const char* fileLocation);
 
 		
 

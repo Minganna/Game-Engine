@@ -11,9 +11,9 @@ namespace myengine
 		friend struct ::myengine::ResourceManager;
 	public:
 
-		virtual void OnLoad(std::string path);
-		std::shared_ptr<Core> GetCore();
-		std::shared_ptr<ResourceManager> GetManager();
+		virtual void onLoad(std::string path);
+		std::shared_ptr<Core> getCore();
+		std::shared_ptr<ResourceManager> getManager();
 
 	protected:
 		std::string path;

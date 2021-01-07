@@ -14,6 +14,7 @@ namespace myengine
 		rend::vec3 getPosition();
 		void translate(float x, float y, float z);
 		void rotate(float x, float y, float z);
+		void setScale(glm::vec3 newscale);
 
 	private:
 		rend::vec3 position;

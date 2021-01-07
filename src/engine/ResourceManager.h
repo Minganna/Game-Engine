@@ -15,7 +15,7 @@ namespace myengine
 		
 
 		template <typename T>
-		std::shared_ptr<T> LoadResource(std::string path)
+		std::shared_ptr<T> loadResource(std::string path)
 		{
 			std::shared_ptr<T> rtn;
 			if (!resources.empty())
@@ -34,14 +34,13 @@ namespace myengine
 			}
 			 rtn= std::make_shared<T>();
 			rtn->manager = self;
-
-			rtn->OnLoad(path);
+			rtn->onLoad(path);
 			resources.push_back(rtn);
 
 			return rtn;
 		}
 
-		std::shared_ptr<Core> GetCore();
+		std::shared_ptr<Core> getCore();
 
 	private:
 		std::weak_ptr<ResourceManager> self;

@@ -16,10 +16,10 @@ namespace myengine
 		friend struct ::myengine::Renderer;
 	public:
 		
-		void OnLoad(std::string fileLoc);
+		void onLoad(std::string fileLoc);
 
 
-		bool LoadtextureA();
+		bool loadtextureA();
 
 
 		~Texture();

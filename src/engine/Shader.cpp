@@ -9,16 +9,16 @@
 
 namespace myengine
 {
-	void Shader::OnLoad(std::string fileLoc)
+	void Shader::onLoad(std::string fileLoc)
 	{
 		fileLocation = fileLoc;
 		shaderContent = "";
-		std::string shaderfile= ReadFile(fileLocation.c_str());
+		std::string shaderfile= readFile(fileLocation.c_str());
 		shaderContent = shaderfile;
 
 	}
 
-	std::string Shader::ReadFile(const char* fileLocation)
+	std::string Shader::readFile(const char* fileLocation)
 	{
 		std::string content;
 		std::ifstream fileStream(fileLocation, std::ios::in);

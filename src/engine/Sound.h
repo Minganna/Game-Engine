@@ -18,7 +18,7 @@ namespace myengine
 		friend struct ::myengine::SoundSource;
 	public:
 
-		void OnLoad(const std::string& path);
+		void onLoad(const std::string& path);
 
 
 		void loadOgg(const std::string& fileName,

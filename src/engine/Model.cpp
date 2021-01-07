@@ -9,15 +9,15 @@
 
 namespace myengine
 {
-	void Model::OnLoad(std::string fileLoc)
+	void Model::onLoad(std::string fileLoc)
 	{
 		fileLocation = fileLoc;
-		ReadFile(fileLocation);
+		readFile(fileLocation);
 	}
 
-	void Model::ReadFile(std::string fileLocation)
+	void Model::readFile(std::string fileLocation)
 	{
-		shape = GetCore()->context->createMesh();
+		shape = getCore()->context->createMesh();
 		std::ifstream file(fileLocation);
 
 		if (!file.is_open())

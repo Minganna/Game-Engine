@@ -3,14 +3,14 @@
 
 namespace myengine
 {
-	void Resource::OnLoad(std::string path)
+	void Resource::onLoad(std::string path)
 	{
 	}
-	std::shared_ptr<Core> Resource::GetCore()
+	std::shared_ptr<Core> Resource::getCore()
 	{
-		return GetManager()->GetCore();
+		return getManager()->getCore();
 	}
-	std::shared_ptr<ResourceManager> Resource::GetManager()
+	std::shared_ptr<ResourceManager> Resource::getManager()
 	{
 		return manager.lock();
 	}
