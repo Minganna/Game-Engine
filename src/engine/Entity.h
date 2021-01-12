@@ -12,11 +12,17 @@ namespace myengine
 	struct Core;
 	struct Exception;
 	struct Transform;
-
+	/// <summary>
+	/// base class for every game object in the scene
+	/// </summary>
 	struct Entity
 	{
 		friend struct ::myengine::Core;
-
+		/// <summary>
+		/// used to add a component to an entity
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		template <typename T>
 		std::shared_ptr<T> addComponent()
 		{
@@ -30,7 +36,13 @@ namespace myengine
 			return rtn;
 		}
 
-
+		/// <summary>
+		/// used to add a component to the entity and pass a n of parameter in the onInitialize function
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="...Args"></typeparam>
+		/// <param name="...args"></param>
+		/// <returns></returns>
 		template <typename T, typename ... Args>
 		std::shared_ptr<T> addComponent(Args&& ... args)
 		{
@@ -41,7 +53,11 @@ namespace myengine
 			return rtn;
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		template <typename T>
 		std::shared_ptr<T> getComponent()
 		{
@@ -56,18 +72,46 @@ namespace myengine
 			throw Exception("Cannot find requested component type");
 		}
 
+
+		/// <summary>
+		/// this function is called every tick
+		/// </summary>
 		void tick();
+		/// <summary>
+		///  this function is called on rendering
+		/// </summary>
 		void render();
-
+		/// <summary>
+		/// this function is called when the component is destroyed
+		/// </summary>
 		void destroy();
-
+		/// <summary>
+		/// getter of the core pointer
+		/// </summary>
+		/// <returns></returns>
 		std::shared_ptr<Core> getCore();
+		/// <summary>
+		/// getter of the associated transform component
+		/// </summary>
+		/// <returns></returns>
 		std::shared_ptr<Transform> getTransform();
 
 	private:
+		/// <summary>
+		/// collection of components associated to the entity
+		/// </summary>
 		std::vector<std::shared_ptr<Component>> components;
+		/// <summary>
+		/// pointer to core
+		/// </summary>
 		std::weak_ptr<Core> core;
+		/// <summary>
+		/// pointer to self
+		/// </summary>
 		std::weak_ptr<Entity> self;
+		/// <summary>
+		/// this bool detect if the entity need to be destroyed
+		/// </summary>
 		bool destroyed;
 
 	};
